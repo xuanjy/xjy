@@ -10,9 +10,8 @@ import java.util.List;
  * @author 黄粱一梦
  * @Create on 2020/2/11 13:36
  */
-@Data
-public class PageDTO {
-    private List<QuestionDTO> questions;
+public class PageDTO<T> {
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -21,19 +20,72 @@ public class PageDTO {
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
 
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
-        if (totalCount % size == 0) {
-            totalPage = totalCount / size;
-        } else {
-            totalPage = totalCount / size + 1;
-        }
+    public List<T> getData() {
+        return data;
+    }
 
-        if (page < 1) {
-            page = 1;
-        }
-        if (page > totalPage) {
-            page = totalPage;
-        }
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public boolean isShowPrevious() {
+        return showPrevious;
+    }
+
+    public void setShowPrevious(boolean showPrevious) {
+        this.showPrevious = showPrevious;
+    }
+
+    public boolean isShowFirstPage() {
+        return showFirstPage;
+    }
+
+    public void setShowFirstPage(boolean showFirstPage) {
+        this.showFirstPage = showFirstPage;
+    }
+
+    public boolean isShowNext() {
+        return showNext;
+    }
+
+    public void setShowNext(boolean showNext) {
+        this.showNext = showNext;
+    }
+
+    public boolean isShowEndPage() {
+        return showEndPage;
+    }
+
+    public void setShowEndPage(boolean showEndPage) {
+        this.showEndPage = showEndPage;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public List<Integer> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Integer> pages) {
+        this.pages = pages;
+    }
+
+    public Integer getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(Integer totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public void setPagination(Integer totalPage, Integer page) {
+        this.totalPage = totalPage;
         this.page = page;
 
         pages.add(page);
@@ -59,7 +111,7 @@ public class PageDTO {
 //        } else {
 //            showNext = true;
 //        }
-        showNext = page != totalPage;
+        showNext = !page.equals(totalPage);
 
         // 是否展示第一页
 //        if (pages.contains(1)) {
@@ -76,5 +128,7 @@ public class PageDTO {
 //            showEndPage = true;
 //        }
         showEndPage = !pages.contains(totalPage);
+
+
     }
 }
